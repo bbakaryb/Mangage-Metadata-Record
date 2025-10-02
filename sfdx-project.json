@@ -2,11 +2,18 @@
   "packageDirectories": [
     {
       "path": "force-app",
-      "default": true
+      "default": true,
+      "package": "managecmd",
+      "versionDescription": "Manage Custom Metadata Record",
+      "versionName": "Version 1.0",
+      "versionNumber": "1.0.0.NEXT"
     }
   ],
-  "name": "manage_metadata_record",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "64.0"
+  "sourceApiVersion": "64.0",
+  "packageAliases": {
+    "managecmd": "0Hod20000000QfFCAU",
+    "managecmd@1.0.0-1": "04td20000007O7FAAU"
+  }
 }

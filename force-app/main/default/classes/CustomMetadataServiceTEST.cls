@@ -22,7 +22,7 @@ private class CustomMetadataServiceTEST {
 
     @IsTest
     static void testCastToCorrectType_Date() {
-        Schema.DescribeFieldResult dfr = Account.SLAExpirationDate__c.getDescribe();
+        Schema.DescribeFieldResult dfr = Opportunity.CloseDate.getDescribe();
         
         // Date
         Date dt1 = Date.newInstance(2025, 1, 1);
