@@ -82,4 +82,80 @@ private class CustomMetadataServiceTEST {
         // default value → String.valueOf()
         System.assertEquals('test', CustomMetadataService.castToCorrectType(dfr, 'test'));
     }
+
+    @isTest
+    static void testGenericUpdateWithRandomCMT() {
+        MetadataSelection selection = getCustomMetadata();
+        if (selection == null) {
+            return; 
+        }
+
+        String chosenType = selection.typeName;
+        SObject existing = selection.record;
+        String existingLabel = (String) existing.get('Label');
+
+        String updateJson = JSON.serialize(new Map<String, Object>{
+            'Label' => 'Label MAJ ' + DateTime.now().getTime()
+        });
+
+        Test.startTest();
+        CustomMetadataService.GenericUpdateRecordByLabel(chosenType, existingLabel, updateJson);
+        Test.stopTest();
+    }
+
+    @isTest
+    static void testGenericCreateWithRandomCMT() {
+        MetadataSelection selection = getCustomMetadata();
+        if (selection == null) {
+            return; 
+        }
+
+        String chosenType = selection.typeName;
+        SObject existing = selection.record;
+        String existingLabel = (String) existing.get('Label');
+
+        String updateJson = JSON.serialize(new Map<String, Object>{
+            'Label' => 'Label MAJ ' + DateTime.now().getTime()
+        });
+
+        Test.startTest();
+        CustomMetadataService.GenericCreateRecord(chosenType, 'record', existingLabel, updateJson);
+        Test.stopTest();
+
+    }
+
+    private class MetadataSelection {
+        String typeName;
+        SObject record;
+        MetadataSelection(String typeName, SObject record) {
+            this.typeName = typeName;
+            this.record = record;
+        }
+    }
+
+    private static MetadataSelection getCustomMetadata() {
+        String chosenType;
+        for (String key : Schema.getGlobalDescribe().keySet()) {
+            if (key.endsWith('__mdt')) {
+                chosenType = key;
+                break;
+            }
+        }
+
+        if (String.isBlank(chosenType)) {
+            System.debug('Any custom metadata type found, test ignored');
+            return null;
+        }
+
+        List<SObject> records = Database.query(
+            'SELECT DeveloperName, Label FROM ' + chosenType + ' LIMIT 1'
+        );
+        if (records.isEmpty()) {
+            System.debug('Any record found in ' + chosenType + ', test ignored');
+            return null;
+        }
+
+        return new MetadataSelection(chosenType, records[0]);
+    }
+
 }
