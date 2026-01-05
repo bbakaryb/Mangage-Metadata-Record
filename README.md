@@ -5,8 +5,7 @@ Managing Custom Metadata records often requires manual deployment or complex scr
 This package provides a simple Apex utility to create and update Custom Metadata records at runtime — dynamically, and asynchronously.
 
 ## 🌟 Why this package ? 
-- Avoid manual deployments for simple metadata changes. 
-- Checks if a date is a weekend or public holiday.  
+- Avoid manual deployments for simple metadata changes.  
 - Update metadata directly from Apex (e.g., in setup wizards, admin tools, or automated processes).  
 - Works in any org without depending on a specific metadata type.  
 
